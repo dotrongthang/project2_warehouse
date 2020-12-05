@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlMN"
+        android:padding="8dp"
+        android:background="@color/primary2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tvTenTX"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh sách sản phẩm"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/imgAdd"
+            android:src="@drawable/icon_add"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/custom_button_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+    </RelativeLayout>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frame_product"-->
+<!--        android:layout_below="@+id/rlMN"-->
+<!--&lt;!&ndash;        android:layout_above="@+id/navigation_mn"&ndash;&gt;-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/navigation_mn"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?android:attr/windowBackground"-->
+<!--        app:itemBackground="@color/white"-->
+<!--        android:foreground="?attr/selectableItemBackground"-->
+<!--        app:itemIconTint="@color/primary"-->
+<!--        app:itemTextColor="@color/primary"-->
+<!--        app:menu="@menu/navi_manager" />-->
+
+</RelativeLayout>
