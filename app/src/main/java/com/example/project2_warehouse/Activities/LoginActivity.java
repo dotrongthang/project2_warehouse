@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     String password;
     private EditText edtUser;
     private EditText edtPassword;
-    Boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +52,26 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetAccount();
-                if (check){
-                    Intent intent;
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(LoginActivity.this, "Loi", Toast.LENGTH_SHORT).show();
-                }
+                user = edtUser.getText().toString();
+                password = edtPassword.getText().toString();
+                DataClient dataClient = APIUtils.getData();
+                Call<List<Admin>> call = dataClient.getAccount(user, password);
+                call.enqueue(new Callback<List<Admin>>() {
+                    @Override
+                    public void onResponse(Call<List<Admin>> call, Response<List<Admin>> response) {
+                        ArrayList<Admin> listtt = (ArrayList<Admin>) response.body();
+                        if (listtt.size() > 0){
+                            Intent intent;
+                            intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<List<Admin>> call, Throwable t) {
+
+                    }
+                });
             }
         });
 
@@ -71,27 +81,5 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    public void GetAccount(){
-        user = edtUser.getText().toString();
-        password = edtPassword.getText().toString();
-        DataClient dataClient = APIUtils.getData();
-        Call<List<Admin>> call = dataClient.getAccount(user, password);
-        call.enqueue(new Callback<List<Admin>>() {
-            @Override
-            public void onResponse(Call<List<Admin>> call, Response<List<Admin>> response) {
-                ArrayList<Admin> listtt = (ArrayList<Admin>) response.body();
-                if (listtt.size() > 0){
-                    check = true;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Admin>> call, Throwable t) {
-
-            }
-        });
-
     }
 }
