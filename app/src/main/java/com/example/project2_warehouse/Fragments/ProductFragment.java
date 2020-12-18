@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.project2_warehouse.Adapters.ListProductAdapter;
+import com.example.project2_warehouse.Interfaces.ISort;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
@@ -63,5 +64,59 @@ public class ProductFragment extends Fragment {
 
            }
        });
+    }
+
+    public void SortProduct(int key) {
+        switch (key){
+            case 1: GetDataSortName();
+            break;
+            case 2: GetDataSortQuantity();
+            break;
+
+        }
+    }
+
+    private void GetDataSortQuantity() {
+        listProduct.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<Product>> callback = dataClient.sortProductByQuantity();
+        callback.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                ArrayList<Product> listP = (ArrayList<Product>) response.body();
+                for (int i = 0; i < listP.size() ; i++) {
+                    Product product = listP.get(i);
+                    listProduct.add(product);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void GetDataSortName(){
+        listProduct.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<Product>> callback = dataClient.sortProductByName();
+        callback.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                ArrayList<Product> listP = (ArrayList<Product>) response.body();
+                for (int i = 0; i < listP.size() ; i++) {
+                    Product product = listP.get(i);
+                    listProduct.add(product);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
     }
 }
