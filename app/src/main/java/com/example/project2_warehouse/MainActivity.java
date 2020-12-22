@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -17,13 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.project2_warehouse.Activities.AddGoodsIssueActivity;
+import com.example.project2_warehouse.Activities.AddGoodsReceiptActivity;
 import com.example.project2_warehouse.Fragments.GoodsIssueFragment;
 import com.example.project2_warehouse.Fragments.GoodsReceiptFragment;
 import com.example.project2_warehouse.Fragments.ProductFragment;
-import com.example.project2_warehouse.Interfaces.ISort;
 import com.example.project2_warehouse.Retrofit.APIUtils;
 import com.example.project2_warehouse.Retrofit.DataClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,31 +34,56 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     Fragment fragment;
-    private TextView tvTitle;
-    private ImageButton imgAdd;
+    private EditText edtSearch;
+    private ImageButton imgAdd, imgSearch;
     private LinearLayout lnSort;
-
+    public int tmp = 0;
+    /*tmp = 1: product
+        tmp = 2: goodsReceipt
+        tmp = 3: goodsIssue
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        edtSearch = (EditText) findViewById(R.id.edtSearch);
         imgAdd = (ImageButton) findViewById(R.id.imgAdd);
         lnSort = (LinearLayout) findViewById(R.id.lnSort);
+        imgSearch = (ImageButton) findViewById(R.id.imgSearch);
 
         fragment = new ProductFragment();
         loadFragment(fragment);
+        tmp = 1;
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddProduct();
+                switch (tmp){
+                    case 1:  AddProduct();
+                        break;
+                    case 2: startActivity(new Intent(MainActivity.this, AddGoodsReceiptActivity.class));
+                        break;
+                    case 3: startActivity(new Intent(MainActivity.this, AddGoodsIssueActivity.class));
+                        break;
+                }
             }
         });
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (tmp){
+                    case 1: ProductFragment productFragment = (ProductFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.frame_fragment);
+                        productFragment.SearchProduct(edtSearch.getText().toString());
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -71,18 +95,21 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_product:
                     fragment = new ProductFragment();
-                    tvTitle.setText("Sản phẩm");
                     loadFragment(fragment);
+                    tmp = 1;
+                    edtSearch.setText("");
                     return true;
                 case R.id.navigation_input:
                     fragment = new GoodsReceiptFragment();
-                    tvTitle.setText("Nhập sản phẩm");
                     loadFragment(fragment);
+                    tmp = 2;
+                    edtSearch.setText("");
                     return true;
                 case R.id.navigation_output:
                     fragment = new GoodsIssueFragment();
-                    tvTitle.setText("Xuất sản phẩm");
                     loadFragment(fragment);
+                    tmp = 3;
+                    edtSearch.setText("");
                     return true;
             }
             return false;
@@ -171,4 +198,5 @@ public class MainActivity extends AppCompatActivity {
         });
         popupMenu.show();
     }
+
 }

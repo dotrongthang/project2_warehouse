@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTitleIO"
+        android:text="Nhập sản phẩm"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:onClick="onClickShowProductIO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edtProductNameIO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Sản phẩm"
+            android:inputType="textFilter" />
+
+        <ImageView
+            android:src="@drawable/ic_drop_down"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/edtQuantityIO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:hint="Số lượng"
+        android:inputType="textFilter" />
+
+    <EditText
+        android:id="@+id/edtNoteIO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Ghi chú"
+        android:inputType="textFilter" />
+
+    <TextView
+        android:id="@+id/tvUnitIO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đơn vị tính: Chiếc"
+        android:textSize="14dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp" />
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSubmitAddIO"
+            android:padding="1dp"
+            android:background="@drawable/custom_button"
+            android:text="Xác nhận"
+            android:layout_width="120dp"
+            android:layout_height="48dp"/>
+
+        <Button
+            android:id="@+id/btnCancelAddIO"
+            android:layout_marginLeft="20dp"
+            android:padding="1dp"
+            android:background="@drawable/custom_button"
+            android:text="Hủy"
+            android:layout_width="120dp"
+            android:layout_height="48dp"/>
+    </LinearLayout>
+
+</LinearLayout>

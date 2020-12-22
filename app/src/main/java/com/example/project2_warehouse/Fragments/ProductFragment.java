@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.project2_warehouse.Adapters.ListProductAdapter;
-import com.example.project2_warehouse.Interfaces.ISort;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
@@ -74,6 +73,28 @@ public class ProductFragment extends Fragment {
             break;
 
         }
+    }
+
+    public void SearchProduct(String name){
+        listProduct.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<Product>> callback = dataClient.searchProduct(name);
+        callback.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                ArrayList<Product> listP = (ArrayList<Product>) response.body();
+                for (int i = 0; i < listP.size() ; i++) {
+                    Product product = listP.get(i);
+                    listProduct.add(product);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void GetDataSortQuantity() {

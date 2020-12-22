@@ -36,14 +36,31 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_centerInParent="true"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Danh sách sản phẩm"
-            android:textSize="18sp" />
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_width="170dp"
+            android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_gravity="center"
+                android:layout_width="140dp"
+                android:background="@android:color/transparent"
+                android:layout_height="50dp"
+                android:hint="Nhập tên sản phẩm"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/imgSearch"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:src="@drawable/ic_search"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/imgAdd"
