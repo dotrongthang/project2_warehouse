@@ -64,4 +64,71 @@ public class GoodsIssueFragment extends Fragment {
             }
         });
     }
+
+    public void SortGoodsIssue(int key) {
+        switch (key){
+            case 1: GetDataSortName();
+                break;
+            case 2: GetDataSortQuantity();
+                break;
+
+        }
+    }
+
+    private void GetDataSortQuantity() {
+        listGoodsIssue.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsIssue>> call = dataClient.sortGoodsIssueByQuantity();
+        call.enqueue(new Callback<List<GoodsIssue>>() {
+            @Override
+            public void onResponse(Call<List<GoodsIssue>> call, Response<List<GoodsIssue>> response) {
+                ArrayList<GoodsIssue> list = (ArrayList<GoodsIssue>) response.body();
+                listGoodsIssue.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsIssue>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void GetDataSortName() {
+        listGoodsIssue.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsIssue>> call = dataClient.sortGoodsIssueByName();
+        call.enqueue(new Callback<List<GoodsIssue>>() {
+            @Override
+            public void onResponse(Call<List<GoodsIssue>> call, Response<List<GoodsIssue>> response) {
+                ArrayList<GoodsIssue> list = (ArrayList<GoodsIssue>) response.body();
+                listGoodsIssue.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsIssue>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void SearchGoodsIssue(String name){
+        listGoodsIssue.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsIssue>> call = dataClient.searchGoodsIssue(name);
+        call.enqueue(new Callback<List<GoodsIssue>>() {
+            @Override
+            public void onResponse(Call<List<GoodsIssue>> call, Response<List<GoodsIssue>> response) {
+                ArrayList<GoodsIssue> list = (ArrayList<GoodsIssue>) response.body();
+                listGoodsIssue.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsIssue>> call, Throwable t) {
+
+            }
+        });
+    }
 }

@@ -26,8 +26,20 @@ public interface DataClient {
     @GET("sortProductByName.php")
     Call<List<Product>> sortProductByName();
 
+    @GET("sortGoodsReceiptByName.php")
+    Call<List<GoodsReceipt>> sortGoodsReceiptByName();
+
+    @GET("sortGoodsIssueByName.php")
+    Call<List<GoodsIssue>> sortGoodsIssueByName();
+
     @GET("sortProductByQuantity.php")
     Call<List<Product>> sortProductByQuantity();
+
+    @GET("sortGoodsReceiptByQuantity.php")
+    Call<List<GoodsReceipt>> sortGoodsReceiptByQuantity();
+
+    @GET("sortGoodsIssueByQuantity.php")
+    Call<List<GoodsIssue>> sortGoodsIssueByQuantity();
 
     @GET("getGoodsReceipt.php")
     Call<List<GoodsReceipt>> getGoodsReceipt();
@@ -38,6 +50,14 @@ public interface DataClient {
     @FormUrlEncoded
     @POST("searchProduct.php")
     Call<List<Product>> searchProduct(@Field("productName") String name);
+
+    @FormUrlEncoded
+    @POST("searchGoodsReceipt.php")
+    Call<List<GoodsReceipt>> searchGoodsReceipt(@Field("productName") String name);
+
+    @FormUrlEncoded
+    @POST("searchGoodsIssue.php")
+    Call<List<GoodsIssue>> searchGoodsIssue(@Field("productName") String name);
 
     @FormUrlEncoded
     @POST("getAccount.php")

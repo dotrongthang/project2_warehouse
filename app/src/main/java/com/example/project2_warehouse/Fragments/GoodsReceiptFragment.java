@@ -69,4 +69,71 @@ public class GoodsReceiptFragment extends Fragment {
         });
     }
 
+    public void SortGoodsReceipt(int key) {
+        switch (key){
+            case 1: GetDataSortName();
+                break;
+            case 2: GetDataSortQuantity();
+                break;
+
+        }
+    }
+
+    private void GetDataSortName() {
+        listGoodsReceipt.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsReceipt>> call = dataClient.sortGoodsReceiptByName();
+        call.enqueue(new Callback<List<GoodsReceipt>>() {
+            @Override
+            public void onResponse(Call<List<GoodsReceipt>> call, Response<List<GoodsReceipt>> response) {
+                ArrayList<GoodsReceipt> list = (ArrayList<GoodsReceipt>) response.body();
+                listGoodsReceipt.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsReceipt>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void GetDataSortQuantity() {
+        listGoodsReceipt.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsReceipt>> call = dataClient.sortGoodsReceiptByQuantity();
+        call.enqueue(new Callback<List<GoodsReceipt>>() {
+            @Override
+            public void onResponse(Call<List<GoodsReceipt>> call, Response<List<GoodsReceipt>> response) {
+                ArrayList<GoodsReceipt> list = (ArrayList<GoodsReceipt>) response.body();
+                listGoodsReceipt.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsReceipt>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void SearchGoodsReceipt(String name){
+        listGoodsReceipt.clear();
+        DataClient dataClient = APIUtils.getData();
+        Call<List<GoodsReceipt>> call = dataClient.searchGoodsReceipt(name);
+        call.enqueue(new Callback<List<GoodsReceipt>>() {
+            @Override
+            public void onResponse(Call<List<GoodsReceipt>> call, Response<List<GoodsReceipt>> response) {
+                ArrayList<GoodsReceipt> list = (ArrayList<GoodsReceipt>) response.body();
+                listGoodsReceipt.addAll(list);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<GoodsReceipt>> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

@@ -66,7 +66,7 @@
         android:id="@+id/tvUnitIO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đơn vị tính: Chiếc"
+        android:text="Đơn vị tính:"
         android:textSize="14dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
