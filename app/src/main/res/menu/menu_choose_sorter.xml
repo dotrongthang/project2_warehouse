@@ -5,4 +5,7 @@
 
     <item android:title="Theo số lượng"
         android:id="@+id/menuSortQuantity"/>
+
+    <item android:title="Theo địa chỉ"
+        android:id="@+id/menuSortAddress"/>
 </menu>

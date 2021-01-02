@@ -2,6 +2,7 @@ package com.example.project2_warehouse;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project2_warehouse.Activities.AddGoodsIssueActivity;
@@ -24,7 +26,11 @@ import com.example.project2_warehouse.Fragments.CustomerFragment;
 import com.example.project2_warehouse.Fragments.GoodsIssueFragment;
 import com.example.project2_warehouse.Fragments.GoodsReceiptFragment;
 import com.example.project2_warehouse.Fragments.ProductFragment;
+import com.example.project2_warehouse.Interfaces.IChangeIP;
+import com.example.project2_warehouse.Interfaces.IEdit;
+import com.example.project2_warehouse.Model.GoodsIssue;
 import com.example.project2_warehouse.Model.GoodsReceipt;
+import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.Retrofit.APIUtils;
 import com.example.project2_warehouse.Retrofit.DataClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP {
 
     Fragment fragment;
     private EditText edtSearch;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     ProductFragment productFragment;
     GoodsReceiptFragment goodsReceiptFragment;
     GoodsIssueFragment goodsIssueFragment;
+
     public int tmp = 0;
     /*tmp = 1: product
         tmp = 2: goodsReceipt
@@ -246,4 +253,95 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    @Override
+    public void EditProduct(final Product product) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit_product);
+        dialog.setCanceledOnTouchOutside(false);
+
+        TextView tvNameProductE = (TextView) dialog.findViewById(R.id.tvNameProductE);
+        final EditText edtQuantityProductE = (EditText) dialog.findViewById(R.id.edtQuantityProductE);
+        final EditText edtUnitProductE = (EditText) dialog.findViewById(R.id.edtUnitProductE);
+        final EditText edtDescriptionProductE = (EditText) dialog.findViewById(R.id.edtDescriptionProductE);
+        Button btnSubmitEdit = (Button) dialog.findViewById(R.id.btnSubmitEdit);
+        Button btnCancelEdit = (Button) dialog.findViewById(R.id.btnCancelEdit);
+
+        tvNameProductE.setText("Tên sản phẩm" + product.getName());
+
+        btnSubmitEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edtQuantityProductE.getText().toString().isEmpty() || edtUnitProductE.getText().toString().isEmpty()
+                        || edtDescriptionProductE.getText().toString().isEmpty() ){
+                    Toast.makeText(MainActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                }else {
+                    EditProductToDB(product.getID(), edtQuantityProductE.getText().toString(),
+                            edtUnitProductE.getText().toString(), edtDescriptionProductE.getText().toString());
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+        btnCancelEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public void EditProductToDB(String id, String quantity, String unit, String description){
+        DataClient dataClient = APIUtils.getData();
+        Call<String> call = dataClient.UpdateProduct(id, quantity, description, unit);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void DeleteGoodsReceipt(GoodsReceipt goodsReceipt) {
+        goodsReceiptFragment = (GoodsReceiptFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frame_fragment);
+        goodsReceiptFragment.DeleteGoodsReceipt(goodsReceipt);
+    }
+
+    @Override
+    public void EditGoodsReceipt(GoodsReceipt goodsReceipt) {
+        goodsReceiptFragment = (GoodsReceiptFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frame_fragment);
+        goodsReceiptFragment.Edit(goodsReceipt);
+    }
+
+    @Override
+    public void Success() {
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+    }
+
+    @Override
+    public void DeleteGoodsIssue(GoodsIssue goodsIssue) {
+        goodsIssueFragment = (GoodsIssueFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frame_fragment);
+        goodsIssueFragment.DeleteGoodsIssue(goodsIssue);
+    }
+
+    @Override
+    public void EditGoodsIssue(GoodsIssue goodsIssue) {
+        goodsIssueFragment = (GoodsIssueFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frame_fragment);
+        goodsIssueFragment.Edit(goodsIssue);
+    }
 }

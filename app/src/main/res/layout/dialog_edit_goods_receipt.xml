@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="Thay đổi thông tin nhập"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvNameProductIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:text="Tên Sản Phẩm"
+        android:layout_marginRight="16dp" />
+
+    <EditText
+        android:id="@+id/edtQuantityProductIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Nhập số lượng"
+        android:inputType="textFilter" />
+
+    <EditText
+        android:id="@+id/edtNoteProductIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Nhập ghi chú"
+        android:inputType="textFilter" />
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSubmitEditIP"
+            android:padding="1dp"
+            android:background="@drawable/custom_button"
+            android:text="Xác nhận"
+            android:layout_width="120dp"
+            android:layout_height="48dp"/>
+
+        <Button
+            android:id="@+id/btnCancelEditIP"
+            android:layout_marginLeft="20dp"
+            android:padding="1dp"
+            android:background="@drawable/custom_button"
+            android:text="Hủy"
+            android:layout_width="120dp"
+            android:layout_height="48dp"/>
+    </LinearLayout>
+
+</LinearLayout>

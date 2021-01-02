@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.project2_warehouse.Adapters.ListProductAdapter;
+import com.example.project2_warehouse.Interfaces.IEdit;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
@@ -28,6 +29,7 @@ public class ProductFragment extends Fragment {
     private RecyclerView rvListProduct;
     List<Product> listProduct;
     ListProductAdapter adapter;
+    IEdit iEdit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +37,7 @@ public class ProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         rvListProduct = (RecyclerView) view.findViewById(R.id.rvListProduct);
         listProduct = new ArrayList<>();
-//        changeInfo = (ChangeInfo) getActivity();
+        iEdit = (IEdit) getActivity();
         GetData();
         return view;
     }
@@ -53,7 +55,7 @@ public class ProductFragment extends Fragment {
                    rvListProduct.hasFixedSize();
                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                    rvListProduct.setLayoutManager(layoutManager);
-                   adapter = new ListProductAdapter(listProduct, getContext());
+                   adapter = new ListProductAdapter(listProduct, getContext(), iEdit);
                    rvListProduct.setAdapter(adapter);
                }
            }

@@ -18,5 +18,5 @@
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/us"
-        android:title="Tài khoản" />
+        android:title="Khách hàng" />
 </menu>

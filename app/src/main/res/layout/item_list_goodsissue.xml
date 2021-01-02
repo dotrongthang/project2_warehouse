@@ -31,16 +31,16 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
-            android:id="@+id/ListEdit"
+            android:id="@+id/imgEditO"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/ListDelete"
+            android:layout_toLeftOf="@+id/imgDeleteO"
             android:layout_marginRight="8dp"
             android:src="@drawable/ic_edit"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
 
         <ImageView
-            android:id="@+id/ListDelete"
+            android:id="@+id/imgDeleteO"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_delete"

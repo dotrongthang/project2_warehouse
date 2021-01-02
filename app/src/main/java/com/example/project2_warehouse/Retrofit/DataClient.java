@@ -71,6 +71,32 @@ public interface DataClient {
                             @Field("productDescription") String description);
 
     @FormUrlEncoded
+    @POST("updateProduct.php")
+    Call<String> UpdateProduct(@Field("idProduct") String id,
+                            @Field("Quantity") String quantity,
+                            @Field("Description") String description,
+                            @Field("Unit") String unit);
+
+    @FormUrlEncoded
+    @POST("updateGoodsReceipt.php")
+    Call<String> UpdateGoodsReceipt(@Field("idGoodsReceipt") String id,
+                               @Field("Quantity") String quantity,
+                               @Field("Note") String note);
+
+    @FormUrlEncoded
+    @POST("updateGoodsIssue.php")
+    Call<String> UpdateGoodsIssue(@Field("idGoodsIssue") String id,
+                                    @Field("Quantity") String quantity);
+
+    @FormUrlEncoded
+    @POST("deleteGoodsReceipt.php")
+    Call<String> DeleteGoodsReceipt(@Field("ID") String id);
+
+    @FormUrlEncoded
+    @POST("deleteGoodsIssue.php")
+    Call<String> DeleteGoodsIssue(@Field("ID") String id);
+
+    @FormUrlEncoded
     @POST("insertGoodsReceipt.php")
     Call<String> AddGoodsReceipt(@Field("ProductId") String id,
                                  @Field("Quantity") String quantity,

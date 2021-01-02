@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project2_warehouse.Interfaces.IEdit;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
 
@@ -19,10 +20,12 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
 
     List<Product> products;
     Context context;
+    IEdit iEdit;
 
-    public ListProductAdapter(List<Product> products, Context context) {
+    public ListProductAdapter(List<Product> products, Context context, IEdit iEdit) {
         this.products = products;
         this.context = context;
+        this.iEdit = iEdit;
     }
 
     @NonNull
@@ -42,13 +45,7 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
         holder.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                changeInfo.changeInfoSender(senders.get(position));
-            }
-        });
-        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                changeInfo.DeleteSender(senders.get(position));
+                iEdit.EditProduct(products.get(position));
             }
         });
     }
@@ -71,8 +68,7 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
             tvListDescription = (TextView) itemView.findViewById(R.id.tvListDescription);
             tvListUnit = (TextView) itemView.findViewById(R.id.tvListUnit);
             tvListQuantity = (TextView) itemView.findViewById(R.id.tvListQuantity);
-            imgEdit = (ImageView) itemView.findViewById(R.id.ListEdit);
-            imgDelete = (ImageView) itemView.findViewById(R.id.ListDelete);
+            imgEdit = (ImageView) itemView.findViewById(R.id.EditProduct);
         }
     }
 }
