@@ -20,11 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project2_warehouse.Adapters.ListGoodsIssueAdapter;
-import com.example.project2_warehouse.Adapters.ListGoodsReceiptAdapter;
 import com.example.project2_warehouse.Interfaces.IChangeIP;
-import com.example.project2_warehouse.MainActivity;
+import com.example.project2_warehouse.Activities.MainActivity;
 import com.example.project2_warehouse.Model.GoodsIssue;
-import com.example.project2_warehouse.Model.GoodsReceipt;
 import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
 import com.example.project2_warehouse.Retrofit.DataClient;
@@ -88,7 +86,7 @@ public class GoodsIssueFragment extends Fragment {
         }
     }
 
-    private void GetDataSortQuantity() {
+    private void GetDataSortQuantity() {    //sort by quantity
         listGoodsIssue.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<GoodsIssue>> call = dataClient.sortGoodsIssueByQuantity();
@@ -107,7 +105,7 @@ public class GoodsIssueFragment extends Fragment {
         });
     }
 
-    private void GetDataSortName() {
+    private void GetDataSortName() {    //sort by name
         listGoodsIssue.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<GoodsIssue>> call = dataClient.sortGoodsIssueByName();
@@ -157,7 +155,7 @@ public class GoodsIssueFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 String id = goodsIssue.getID();
                 Delete(id);
-                iChangeIP.Success();
+                iChangeIP.Success(2);
             }
         });
 
@@ -207,7 +205,9 @@ public class GoodsIssueFragment extends Fragment {
                     Toast.makeText(getContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else {
                     EditToDB(goodsIssue.getID(), edtQuantityProduct.getText().toString());
-                    startActivity(new Intent(getContext(), MainActivity.class));
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra("key", 3);
+                    startActivity(intent);
                     dialog.dismiss();
                 }
 

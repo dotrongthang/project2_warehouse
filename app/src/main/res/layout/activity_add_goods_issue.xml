@@ -75,7 +75,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:hint="Số lượng"
-        android:inputType="textFilter" />
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/tvUnitOP"

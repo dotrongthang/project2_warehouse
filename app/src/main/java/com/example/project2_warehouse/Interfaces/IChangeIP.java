@@ -6,7 +6,7 @@ import com.example.project2_warehouse.Model.GoodsReceipt;
 public interface IChangeIP {
     void DeleteGoodsReceipt(GoodsReceipt goodsReceipt);
     void EditGoodsReceipt(GoodsReceipt goodsReceipt);
-    void Success();
+    void Success(int key);
 
     void DeleteGoodsIssue(GoodsIssue goodsIssue);
 

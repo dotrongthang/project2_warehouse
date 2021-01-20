@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/imgList"
             android:scaleType="fitXY"
-            android:src="@drawable/us"
+            android:src="@drawable/ic_user"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
 

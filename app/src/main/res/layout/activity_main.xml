@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <RelativeLayout
         android:id="@+id/rlTitle"
@@ -15,10 +15,33 @@
         android:layout_height="50dp">
 
         <LinearLayout
-            android:id="@+id/lnSort"
+            android:id="@+id/lnSortProduct"
             android:layout_alignParentLeft="true"
             android:orientation="horizontal"
-            android:onClick="onClickSort"
+            android:onClick="onClickSortProduct"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Sắp xếp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/ic_drop_down"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnSortCustomer"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:onClick="onClickSortCustomer"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -39,6 +62,8 @@
         <LinearLayout
             android:layout_centerInParent="true"
             android:orientation="horizontal"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:padding="1dp"
             android:background="@drawable/frame_circle"
             android:layout_width="170dp"
@@ -50,6 +75,7 @@
                 android:layout_width="140dp"
                 android:background="@android:color/transparent"
                 android:layout_height="50dp"
+                android:maxLines="1"
                 android:hint="Nhập tên sản phẩm"
                 android:textSize="14sp" />
 

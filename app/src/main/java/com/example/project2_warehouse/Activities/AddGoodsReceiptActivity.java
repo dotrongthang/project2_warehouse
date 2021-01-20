@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.project2_warehouse.Adapters.ListChooseProductAdapter;
 import com.example.project2_warehouse.Interfaces.IPassData;
-import com.example.project2_warehouse.MainActivity;
 import com.example.project2_warehouse.Model.Customer;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
@@ -61,19 +60,23 @@ public class AddGoodsReceiptActivity extends AppCompatActivity implements IPassD
             @Override
             public void onClick(View v) {
                 AddGoodsReceipt();
-                startActivity(new Intent(AddGoodsReceiptActivity.this, MainActivity.class));
+                Intent intent = new Intent(AddGoodsReceiptActivity.this, MainActivity.class);
+                intent.putExtra("key", 2);
+                startActivity(intent);
             }
         });
 
         btnCancelAddIO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddGoodsReceiptActivity.this, MainActivity.class));
+                Intent intent = new Intent(AddGoodsReceiptActivity.this, MainActivity.class);
+                intent.putExtra("key", 2);
+                startActivity(intent);
             }
         });
     }
 
-    public void onClickShowProductIO (View view){
+    public void onClickShowProductIO (View view){   //show list product
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_choose_product);
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project2_warehouse.Interfaces.IEdit;
 import com.example.project2_warehouse.Model.Customer;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
@@ -20,10 +21,12 @@ public class ListCustomerAdapter extends RecyclerView.Adapter<ListCustomerAdapte
 
     List<Customer> customers;
     Context context;
+    IEdit iEdit;
 
-    public ListCustomerAdapter(List<Customer> customers, Context context) {
+    public ListCustomerAdapter(List<Customer> customers, Context context, IEdit iEdit) {
         this.customers = customers;
         this.context = context;
+        this.iEdit = iEdit;
     }
 
     @NonNull
@@ -39,6 +42,12 @@ public class ListCustomerAdapter extends RecyclerView.Adapter<ListCustomerAdapte
         holder.tvListNameCustomer.setText(customers.get(position).getName());
         holder.tvListPhoneCustomer.setText(customers.get(position).getPhoneNumber());
         holder.tvListAddressCustomer.setText(customers.get(position).getAddress());
+        holder.ListEditCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iEdit.EditCustomer(customers.get(position));
+            }
+        });
     }
 
     @Override
@@ -49,7 +58,6 @@ public class ListCustomerAdapter extends RecyclerView.Adapter<ListCustomerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvListNameCustomer;
         private ImageView ListEditCustomer;
-        private ImageView ListDeleteCustomer;
         private TextView tvListPhoneCustomer;
         private TextView tvListAddressCustomer;
 
@@ -57,7 +65,6 @@ public class ListCustomerAdapter extends RecyclerView.Adapter<ListCustomerAdapte
             super(itemView);
             tvListNameCustomer = (TextView) itemView.findViewById(R.id.tvListNameCustomer);
             ListEditCustomer = (ImageView) itemView.findViewById(R.id.ListEditCustomer);
-            ListDeleteCustomer = (ImageView) itemView.findViewById(R.id.ListDeleteCustomer);
             tvListPhoneCustomer = (TextView) itemView.findViewById(R.id.tvListPhoneCustomer);
             tvListAddressCustomer = (TextView) itemView.findViewById(R.id.tvListAddressCustomer);
         }

@@ -99,7 +99,7 @@ public class ProductFragment extends Fragment {
         });
     }
 
-    private void GetDataSortQuantity() {
+    private void GetDataSortQuantity() {    //sort by quantity
         listProduct.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<Product>> callback = dataClient.sortProductByQuantity();
@@ -121,7 +121,7 @@ public class ProductFragment extends Fragment {
         });
     }
 
-    public void GetDataSortName(){
+    public void GetDataSortName(){  //sort by name
         listProduct.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<Product>> callback = dataClient.sortProductByName();

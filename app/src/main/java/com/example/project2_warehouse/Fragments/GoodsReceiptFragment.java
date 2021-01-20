@@ -21,9 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project2_warehouse.Adapters.ListGoodsReceiptAdapter;
-import com.example.project2_warehouse.Adapters.ListProductAdapter;
 import com.example.project2_warehouse.Interfaces.IChangeIP;
-import com.example.project2_warehouse.MainActivity;
+import com.example.project2_warehouse.Activities.MainActivity;
 import com.example.project2_warehouse.Model.GoodsReceipt;
 import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
@@ -95,7 +94,7 @@ public class GoodsReceiptFragment extends Fragment {
         }
     }
 
-    private void GetDataSortName() {
+    private void GetDataSortName() {    //sort by name
         listGoodsReceipt.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<GoodsReceipt>> call = dataClient.sortGoodsReceiptByName();
@@ -114,7 +113,7 @@ public class GoodsReceiptFragment extends Fragment {
         });
     }
 
-    private void GetDataSortQuantity() {
+    private void GetDataSortQuantity() {    //sort by quantity
         listGoodsReceipt.clear();
         DataClient dataClient = APIUtils.getData();
         Call<List<GoodsReceipt>> call = dataClient.sortGoodsReceiptByQuantity();
@@ -174,7 +173,9 @@ public class GoodsReceiptFragment extends Fragment {
                 }else {
                     EditToDB(goodsReceipt.getID(), edtQuantityProduct.getText().toString(),
                             edtNote.getText().toString());
-                    startActivity(new Intent(getContext(), MainActivity.class));
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra("key", 2);
+                    startActivity(intent);
                     dialog.dismiss();
                 }
 
@@ -219,7 +220,7 @@ public class GoodsReceiptFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 String id = goodsReceipt.getID();
                 Delete(id);
-                iChangeIP.Success();
+                iChangeIP.Success(1);
             }
         });
 

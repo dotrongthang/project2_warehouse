@@ -1,8 +1,7 @@
-package com.example.project2_warehouse;
+package com.example.project2_warehouse.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,17 +19,17 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.project2_warehouse.Activities.AddGoodsIssueActivity;
-import com.example.project2_warehouse.Activities.AddGoodsReceiptActivity;
 import com.example.project2_warehouse.Fragments.CustomerFragment;
 import com.example.project2_warehouse.Fragments.GoodsIssueFragment;
 import com.example.project2_warehouse.Fragments.GoodsReceiptFragment;
 import com.example.project2_warehouse.Fragments.ProductFragment;
 import com.example.project2_warehouse.Interfaces.IChangeIP;
 import com.example.project2_warehouse.Interfaces.IEdit;
+import com.example.project2_warehouse.Model.Customer;
 import com.example.project2_warehouse.Model.GoodsIssue;
 import com.example.project2_warehouse.Model.GoodsReceipt;
 import com.example.project2_warehouse.Model.Product;
+import com.example.project2_warehouse.R;
 import com.example.project2_warehouse.Retrofit.APIUtils;
 import com.example.project2_warehouse.Retrofit.DataClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,15 +43,19 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
     Fragment fragment;
     private EditText edtSearch;
     private ImageButton imgAdd, imgSearch;
-    private LinearLayout lnSort;
+    private LinearLayout lnSortProduct;     //sort product, goodsreceipt, goodsissue
+    private LinearLayout lnSortCustomer;    //sort customer
     ProductFragment productFragment;
     GoodsReceiptFragment goodsReceiptFragment;
     GoodsIssueFragment goodsIssueFragment;
+    CustomerFragment customerFragment;
+    int key = 0;
 
     public int tmp = 0;
     /*tmp = 1: product
         tmp = 2: goodsReceipt
         tmp = 3: goodsIssue
+        tmp = 4: Customer
      */
 
     @Override
@@ -62,21 +65,45 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
 
         edtSearch = (EditText) findViewById(R.id.edtSearch);
         imgAdd = (ImageButton) findViewById(R.id.imgAdd);
-        lnSort = (LinearLayout) findViewById(R.id.lnSort);
+        lnSortProduct = (LinearLayout) findViewById(R.id.lnSortProduct);
+        lnSortCustomer = (LinearLayout) findViewById(R.id.lnSortCustomer);
         imgSearch = (ImageButton) findViewById(R.id.imgSearch);
 
-        fragment = new ProductFragment();
-        loadFragment(fragment);
-        tmp = 1;
+        Intent intent = getIntent();
+        key = intent.getIntExtra("key", -9999); // get key fragment
+
+        switch (key){
+            case 2: fragment = new GoodsReceiptFragment();
+                loadFragment(fragment);
+                tmp = 2;
+                break;
+            case 3:fragment = new GoodsIssueFragment();
+                loadFragment(fragment);
+                tmp = 3;
+                break;
+            case 4:fragment = new CustomerFragment();
+                loadFragment(fragment);
+                tmp = 4;
+                break;
+            default:fragment = new ProductFragment();
+                loadFragment(fragment);
+                tmp = 1;
+                break;
+        }
+
+
+
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //add new
                 switch (tmp){
                     case 1:  AddProduct();
                         break;
                     case 2: startActivity(new Intent(MainActivity.this, AddGoodsReceiptActivity.class));
                         break;
                     case 3: startActivity(new Intent(MainActivity.this, AddGoodsIssueActivity.class));
+                        break;
+                    case 4:  AddCustomer();
                         break;
                 }
             }
@@ -87,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
 
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {   //search
                 switch (tmp){
                     case 1: productFragment = (ProductFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.frame_fragment);
@@ -100,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
                     case 3:goodsIssueFragment = (GoodsIssueFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.frame_fragment);
                             goodsIssueFragment.SearchGoodsIssue(edtSearch.getText().toString());
+                        break;
+                    case 4:customerFragment = (CustomerFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.frame_fragment);
+                        customerFragment.SearchCustomer(edtSearch.getText().toString());
                         break;
                 }
             }
@@ -117,25 +148,35 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
                     fragment = new ProductFragment();
                     loadFragment(fragment);
                     tmp = 1;
+                    lnSortProduct.setVisibility(View.VISIBLE);
+                    lnSortCustomer.setVisibility(View.INVISIBLE);
                     edtSearch.setText("");
+                    edtSearch.setHint("Nhập tên sản phẩm");
                     return true;
                 case R.id.navigation_input:
                     fragment = new GoodsReceiptFragment();
                     loadFragment(fragment);
                     tmp = 2;
+                    lnSortProduct.setVisibility(View.VISIBLE);
+                    lnSortCustomer.setVisibility(View.INVISIBLE);
                     edtSearch.setText("");
+                    edtSearch.setHint("Nhập tên sản phẩm");
                     return true;
                 case R.id.navigation_output:
                     fragment = new GoodsIssueFragment();
                     loadFragment(fragment);
                     tmp = 3;
+                    lnSortProduct.setVisibility(View.VISIBLE);
+                    lnSortCustomer.setVisibility(View.INVISIBLE);
                     edtSearch.setText("");
+                    edtSearch.setHint("Nhập tên sản phẩm");
                     return true;
                 case R.id.navigation_user:
                     fragment = new CustomerFragment();
                     loadFragment(fragment);
                     tmp = 4;
-//                    lnSort.setVisibility(View.INVISIBLE);
+                    lnSortProduct.setVisibility(View.INVISIBLE);
+                    lnSortCustomer.setVisibility(View.VISIBLE);
                     edtSearch.setText("");
                     edtSearch.setHint("Nhập tên khách hàng");
                     return true;
@@ -189,7 +230,47 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
         dialog.show();
     }
 
-    private void AddProductToDB(String name, String unit, String description){
+    private void AddCustomer() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_customer);
+        dialog.setCanceledOnTouchOutside(false);
+
+        final EditText edtNameCustomer = (EditText) dialog.findViewById(R.id.edtNameCustomer);
+        final EditText edtPhoneNumber = (EditText) dialog.findViewById(R.id.edtPhoneNumber);
+        final EditText edtAddressCustomer = (EditText) dialog.findViewById(R.id.edtAddressCustomer);
+        final Button btnSubmitAdd = (Button) dialog.findViewById(R.id.btnSubmitAddCustomer);
+        final Button btnCancelAdd = (Button) dialog.findViewById(R.id.btnCancelAddCustomer);
+
+        btnSubmitAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edtNameCustomer.getText().toString().isEmpty() || edtPhoneNumber.getText().toString().isEmpty()
+                        || edtAddressCustomer.getText().toString().isEmpty() ){
+                    Toast.makeText(MainActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                }else {
+                    AddCustomerToDB(edtNameCustomer.getText().toString(), edtPhoneNumber.getText().toString(),
+                            edtAddressCustomer.getText().toString());
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    intent.putExtra("key", 4);
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+        btnCancelAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void AddProductToDB(String name, String unit, String description){  //add to database
         DataClient dataClient = APIUtils.getData();
         Call<String> call = dataClient.addProduct(name, unit, description);
         call.enqueue(new Callback<String>() {
@@ -205,12 +286,29 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
         });
     }
 
-    public void onClickSort(View view){
-        PopupMenu popupMenu = new PopupMenu(MainActivity.this, lnSort);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_choose_sorter, popupMenu.getMenu());
+    public void AddCustomerToDB(String name, String phoneNumber, String address){   //add to database
+        DataClient dataClient = APIUtils.getData();
+        Call<String> call = dataClient.addCustomer(name, phoneNumber, address);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void onClickSortProduct(View view){
+        PopupMenu popupMenu = new PopupMenu(MainActivity.this, lnSortProduct);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_sorter_product, popupMenu.getMenu());
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public boolean onMenuItemClick(MenuItem item) { // call methods from child fragment
                 switch (tmp){
                     case 1: productFragment = (ProductFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.frame_fragment);
@@ -248,6 +346,31 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
                         break;
                 }
                 return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    public void onClickSortCustomer(View view){
+        PopupMenu popupMenu = new PopupMenu(MainActivity.this, lnSortCustomer);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_sorter_customer, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menuSortNameC:
+                        customerFragment = (CustomerFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.frame_fragment);
+                        customerFragment.SortCustomer(1);
+                        break;
+                    case R.id.menuSortAddress:
+                        customerFragment = (CustomerFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.frame_fragment);
+                        customerFragment.SortCustomer(2);
+                        break;
+                }
+                        return false;
             }
         });
         popupMenu.show();
@@ -296,6 +419,13 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
 
     }
 
+    @Override
+    public void EditCustomer(Customer customer) {
+        customerFragment = (CustomerFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frame_fragment);
+        customerFragment.Edit(customer);
+    }
+
     public void EditProductToDB(String id, String quantity, String unit, String description){
         DataClient dataClient = APIUtils.getData();
         Call<String> call = dataClient.UpdateProduct(id, quantity, description, unit);
@@ -327,8 +457,17 @@ public class MainActivity extends AppCompatActivity implements IEdit, IChangeIP 
     }
 
     @Override
-    public void Success() {
-        startActivity(new Intent(MainActivity.this, MainActivity.class));
+    public void Success(int key) {
+        if (key == 1) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("key", 2);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("key", 3);
+            startActivity(intent);
+        }
+
     }
 
     @Override

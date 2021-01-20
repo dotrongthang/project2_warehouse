@@ -46,19 +46,12 @@
 
             <ImageView
                 android:id="@+id/ListEditCustomer"
-                android:layout_toLeftOf="@+id/ListDeleteCustomer"
+                android:layout_alignParentRight="true"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_edit" />
 
-            <ImageView
-                android:id="@+id/ListDeleteCustomer"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_delete"
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
         </RelativeLayout>
 
         <LinearLayout

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.project2_warehouse.Adapters.ListChooseCustomerAdapter;
 import com.example.project2_warehouse.Adapters.ListChooseProductAdapter;
 import com.example.project2_warehouse.Interfaces.IPassData;
-import com.example.project2_warehouse.MainActivity;
 import com.example.project2_warehouse.Model.Customer;
 import com.example.project2_warehouse.Model.Product;
 import com.example.project2_warehouse.R;
@@ -64,14 +63,18 @@ public class AddGoodsIssueActivity extends AppCompatActivity implements IPassDat
             @Override
             public void onClick(View v) {
                 InsertGoodsIssue();
-                startActivity(new Intent(AddGoodsIssueActivity.this, MainActivity.class));
+                Intent intent = new Intent(AddGoodsIssueActivity.this, MainActivity.class);
+                intent.putExtra("key", 3);
+                startActivity(intent);
             }
         });
 
         btnCancelAddOP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddGoodsIssueActivity.this, MainActivity.class));
+                Intent intent = new Intent(AddGoodsIssueActivity.this, MainActivity.class);
+                intent.putExtra("key", 3);
+                startActivity(intent);
             }
         });
     }
@@ -91,7 +94,7 @@ public class AddGoodsIssueActivity extends AppCompatActivity implements IPassDat
         dialogC.dismiss();
     }
 
-    public void onClickShowProductOP (View view){
+    public void onClickShowProductOP (View view){   //show list product
         dialogP = new Dialog(this);
         dialogP.setContentView(R.layout.dialog_choose_product);
 
@@ -125,7 +128,7 @@ public class AddGoodsIssueActivity extends AppCompatActivity implements IPassDat
         });
     }
 
-    public void onClickShowCustomerOP (View view){
+    public void onClickShowCustomerOP (View view){  //show list customer
         dialogC = new Dialog(this);
         dialogC.setContentView(R.layout.dialog_choose_customer);
 

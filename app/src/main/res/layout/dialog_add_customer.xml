@@ -9,51 +9,41 @@
 
     <TextView
         android:id="@+id/tvTitleAdd"
-        android:text="Thay đổi thông tin sản phẩm"
+        android:text="Thêm khách hàng mới"
         android:textStyle="bold"
         android:gravity="center"
         android:textSize="24sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/tvNameProductE"
+    <EditText
+        android:id="@+id/edtNameCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:text="Tên Sản Phẩm"
-        android:layout_marginRight="16dp" />
-
-    <EditText
-        android:id="@+id/edtQuantityProductE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Nhập số lượng"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/edtUnitProductE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Nhập đơn vị tính"
+        android:hint="Nhập tên khách hàng"
         android:inputType="textFilter" />
 
     <EditText
-        android:id="@+id/edtDescriptionProductE"
+        android:id="@+id/edtPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Nhập mô tả"
+        android:hint="Nhập số điện thoại"
+        android:inputType="textFilter" />
+
+    <EditText
+        android:id="@+id/edtAddressCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Nhập địa chỉ"
         android:inputType="textFilter" />
 
     <LinearLayout
@@ -65,7 +55,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnSubmitEdit"
+            android:id="@+id/btnSubmitAddCustomer"
             android:padding="1dp"
             android:background="@drawable/custom_button"
             android:text="Xác nhận"
@@ -73,7 +63,7 @@
             android:layout_height="48dp"/>
 
         <Button
-            android:id="@+id/btnCancelEdit"
+            android:id="@+id/btnCancelAddCustomer"
             android:layout_marginLeft="20dp"
             android:padding="1dp"
             android:background="@drawable/custom_button"

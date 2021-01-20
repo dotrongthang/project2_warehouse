@@ -23,6 +23,12 @@ public interface DataClient {
     @GET("getCustomer.php")
     Call<List<Customer>> getCustomer();
 
+    @GET("sortCustomerByName.php")
+    Call<List<Customer>> sortCustomerByName();
+
+    @GET("sortCustomerByAddress.php")
+    Call<List<Customer>> sortCustomerByAddress();
+
     @GET("sortProductByName.php")
     Call<List<Product>> sortProductByName();
 
@@ -60,6 +66,10 @@ public interface DataClient {
     Call<List<GoodsIssue>> searchGoodsIssue(@Field("productName") String name);
 
     @FormUrlEncoded
+    @POST("searchCustomer.php")
+    Call<List<Customer>> searchCustomer(@Field("customerName") String name);
+
+    @FormUrlEncoded
     @POST("getAccount.php")
     Call<List<Admin>> getAccount(@Field("user") String user,
                                  @Field("password") String password);
@@ -69,6 +79,18 @@ public interface DataClient {
     Call<String> addProduct(@Field("productName") String name,
                             @Field("productUnit") String unit,
                             @Field("productDescription") String description);
+
+    @FormUrlEncoded
+    @POST("addCustomer.php")
+    Call<String> addCustomer(@Field("customerName") String name,
+                             @Field("phoneNumber") String phone,
+                             @Field("address") String address);
+
+    @FormUrlEncoded
+    @POST("updateCustomer.php")
+    Call<String> UpdateCustomer(@Field("IdCustomer") String id,
+                             @Field("PhoneNumber") String phone,
+                             @Field("Address") String address);
 
     @FormUrlEncoded
     @POST("updateProduct.php")
